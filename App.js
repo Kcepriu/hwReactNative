@@ -10,7 +10,8 @@ import {
   Keyboard,
 } from 'react-native';
 
-import LoginScreen from './screens/LoginScreen';
+import LoginScreen from './screens/LoginScreen/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen/RegisterScreen';
 
 import { styles } from './App.styles';
 
@@ -48,7 +49,13 @@ export default function App() {
           source={require('./assets/images/background_1x.jpg')}
         >
           {/* <StatusBar style="auto" /> */}
-          <LoginScreen
+          {/* <LoginScreen
+            isShowKeyboard={isShowKeyboard}
+            setIsShowKeyboard={setIsShowKeyboard}
+            keyboardHide={keyboardHide}
+          /> */}
+
+          <RegisterScreen
             isShowKeyboard={isShowKeyboard}
             setIsShowKeyboard={setIsShowKeyboard}
             keyboardHide={keyboardHide}

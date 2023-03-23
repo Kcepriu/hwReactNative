@@ -11,12 +11,6 @@ export const styles = StyleSheet.create({
 
   containerLogIn: {
     marginTop: 32,
-
-    // marginBottom: 43,
-    // marginBottom: 120,
-
-    // width: '100%',
-    // marginHorizontal: 40,
   },
 
   headerLogin: {
@@ -87,11 +81,24 @@ export const styles = StyleSheet.create({
 
   btnNotAccount: {
     marginTop: 16,
-    marginBottom: 144,
+    marginBottom: 45,
     alignItems: 'center',
   },
 
   textNoAccount: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    lineHeight: 19,
+    color: '#1B4371',
+  },
+
+  btnShowPassword: {
+    position: 'absolute',
+    right: 16,
+    top: 16,
+  },
+
+  textShowPassword: {
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
     lineHeight: 19,

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import { styles } from './LoginScreen.styles';
-import InputText from '../compontnts/InputText/InputText';
+import InputText from '../../compontnts/InputText/InputText';
 
 const initialStateForm = {
   email: '',
@@ -20,6 +20,7 @@ const initialStateForm = {
 
 const LoginScreen = ({ isShowKeyboard, setIsShowKeyboard, keyboardHide }) => {
   const [stateForm, setStateForm] = useState(initialStateForm);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [dimensions, setDimensions] = useState(
     Dimensions.get('window').width - 16 * 2
@@ -104,9 +105,10 @@ const LoginScreen = ({ isShowKeyboard, setIsShowKeyboard, keyboardHide }) => {
             <InputText
               textAlign="left"
               value={stateForm.password}
+              paddingRight={95}
               placeholder="Пароль"
               placeholderTextColor="#BDBDBD"
-              secureTextEntry={true}
+              secureTextEntry={!showPassword}
               onFocusOther={() => {
                 setIsShowKeyboard(true);
               }}
@@ -114,6 +116,13 @@ const LoginScreen = ({ isShowKeyboard, setIsShowKeyboard, keyboardHide }) => {
                 setStateForm(prev => ({ ...prev, password: value }))
               }
             />
+            <TouchableOpacity
+              style={styles.btnShowPassword}
+              activeOpacity={0.8}
+              onPress={() => setShowPassword(prev => !prev)}
+            >
+              <Text style={styles.textShowPassword}>Показать</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
