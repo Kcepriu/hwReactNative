@@ -9,13 +9,26 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
   },
 
+  containerAvatar: {
+    position: 'absolute',
+    top: -60,
+
+    backgroundColor: '#F6F6F6',
+
+    width: 120,
+    height: 120,
+    borderRadius: 16,
+  },
+
+  avatar: {},
+
   containerLogIn: {
-    marginTop: 32,
+    marginTop: 92,
   },
 
   headerLogin: {
     alignItems: 'center',
-    marginBottom: 50,
+    marginBottom: 32,
   },
 
   headerLoginTitle: {

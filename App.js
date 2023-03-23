@@ -49,17 +49,17 @@ export default function App() {
           source={require('./assets/images/background_1x.jpg')}
         >
           {/* <StatusBar style="auto" /> */}
-          <LoginScreen
-            isShowKeyboard={isShowKeyboard}
-            setIsShowKeyboard={setIsShowKeyboard}
-            keyboardHide={keyboardHide}
-          />
-
-          {/* <RegisterScreen
+          {/* <LoginScreen
             isShowKeyboard={isShowKeyboard}
             setIsShowKeyboard={setIsShowKeyboard}
             keyboardHide={keyboardHide}
           /> */}
+
+          <RegisterScreen
+            isShowKeyboard={isShowKeyboard}
+            setIsShowKeyboard={setIsShowKeyboard}
+            keyboardHide={keyboardHide}
+          />
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>

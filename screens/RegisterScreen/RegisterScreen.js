@@ -9,9 +9,9 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-
-import { styles } from './RegisterScreen.styles';
 import InputText from '../../compontnts/InputText/InputText';
+import BtnAvatar from '../../compontnts/BtnAvatar/BtnAvatar';
+import { styles } from './RegisterScreen.styles';
 
 const initialStateForm = {
   login: '',
@@ -73,6 +73,17 @@ const RegisterScreen = ({
           marginBottom: isShowKeyboard ? -150 : 0,
         }}
       >
+        <View style={styles.containerAvatar}>
+          {/* <Image
+              style={styles.avatar}
+              width={120}
+              height={120}
+              // source={require('@expo/snack-static/react-native-logo.png')}
+            /> */}
+
+          <BtnAvatar />
+        </View>
+
         <View
           style={{
             ...styles.containerLogIn,
