@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     bottom: 14,
     right: -14,
 
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
 
     width: 25,
     height: 25,

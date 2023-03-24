@@ -10,6 +10,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import LoginScreen from './screens/LoginScreen/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen/RegisterScreen';
+import HomeScreen from './screens/HomeScreen/HomeScreen';
 
 // import { LogBox } from 'react-native';
 // LogBox.ignoreLogs(['Remote debugger']);
@@ -35,15 +36,54 @@ export default function App() {
     return null;
   }
 
-  return <LoginScreen onLayout={onLayoutRootView} />;
+  return (
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <NavigationContainer>
+        <AuthStack.Navigator>
+          {/*  Login */}
+          <AuthStack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={LoginScreen}
+          />
+          {/*  Register */}
+          <AuthStack.Screen
+            options={{ headerShown: false }}
+            name="Register"
+            component={RegisterScreen}
+          />
+          {/*  HomeScreen */}
+          <AuthStack.Screen
+            options={{ headerShown: false }}
+            name="HomeScreen"
+            component={HomeScreen}
+          />
+        </AuthStack.Navigator>
+      </NavigationContainer>
+    </View>
+  );
 }
 
 {
   /* <NavigationContainer>
-        <AuthStack.Navigator>
-          <AuthStack.Screen name="Login" component={LoginScreen} />
+      <AuthStack.Navigator>
+        <AuthStack.Screen
+          options={{ headerShown: false }}
+          name="Register"
+          component={RegisterScreen}
+        />
 
-          <AuthStack.Screen name="Register" component={RegisterScreen} />
-        </AuthStack.Navigator>
-      </NavigationContainer> */
+        <AuthStack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={LoginScreen}
+        />
+      </AuthStack.Navigator>
+    </NavigationContainer> */
+}
+
+{
+  /* <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <LoginScreen />
+    </View> */
 }
