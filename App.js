@@ -1,25 +1,24 @@
 import React from 'react';
-import { useState, useCallback } from 'react';
+import { View, Text } from 'react-native';
+import { useCallback } from 'react';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-
-import {
-  View,
-  ImageBackground,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
 
 import LoginScreen from './screens/LoginScreen/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen/RegisterScreen';
 
-import { styles } from './App.styles';
+// import { LogBox } from 'react-native';
+// LogBox.ignoreLogs(['Remote debugger']);
 
 SplashScreen.preventAutoHideAsync();
 
-export default function App() {
-  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+const AuthStack = createStackNavigator(); // вказує на групу навігаторів
 
+export default function App() {
   const [fontsLoaded] = useFonts({
     'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'), //700
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'), //500
@@ -36,32 +35,15 @@ export default function App() {
     return null;
   }
 
-  const keyboardHide = () => {
-    setIsShowKeyboard(false);
-    Keyboard.dismiss();
-  };
+  return <LoginScreen onLayout={onLayoutRootView} />;
+}
 
-  return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <ImageBackground
-          style={styles.background}
-          source={require('./assets/images/background_1x.jpg')}
-        >
-          {/* <StatusBar style="auto" /> */}
-          {/* <LoginScreen
-            isShowKeyboard={isShowKeyboard}
-            setIsShowKeyboard={setIsShowKeyboard}
-            keyboardHide={keyboardHide}
-          /> */}
+{
+  /* <NavigationContainer>
+        <AuthStack.Navigator>
+          <AuthStack.Screen name="Login" component={LoginScreen} />
 
-          <RegisterScreen
-            isShowKeyboard={isShowKeyboard}
-            setIsShowKeyboard={setIsShowKeyboard}
-            keyboardHide={keyboardHide}
-          />
-        </ImageBackground>
-      </View>
-    </TouchableWithoutFeedback>
-  );
+          <AuthStack.Screen name="Register" component={RegisterScreen} />
+        </AuthStack.Navigator>
+      </NavigationContainer> */
 }
