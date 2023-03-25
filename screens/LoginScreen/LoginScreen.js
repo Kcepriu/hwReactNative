@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import {
+  Image,
   Text,
   View,
   TouchableOpacity,
@@ -13,8 +14,6 @@ import {
 
 import { styles } from './LoginScreen.styles';
 import InputText from '../../components/InputText/InputText';
-
-import MainLayouts from '../../layouts/MainLayout';
 
 const initialStateForm = {
   email: '',
@@ -80,100 +79,120 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
-      <MainLayouts>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'heoght'}
-        >
+    <>
+      <Image
+        style={{
+          flex: 1,
+          width: '100%',
+          position: 'absolute',
+          resizeMode: 'cover',
+        }}
+        source={require('../../assets/images/background_1x.jpg')}
+      />
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'heoght'}
+        style={{
+          flex: 1,
+        }}
+      >
+        <TouchableWithoutFeedback onPress={keyboardHide}>
           <View
             style={{
-              ...styles.containerMainLogin,
-              marginBottom: isShowKeyboard ? -250 : 0,
+              flex: 1,
+              justifyContent: 'flex-end',
             }}
           >
             <View
               style={{
-                ...styles.containerLogIn,
-                width: dimensions,
+                ...styles.containerMainLogin,
+                marginBottom: isShowKeyboard ? -250 : 0,
               }}
             >
-              <View style={styles.headerLogin}>
-                <Text style={styles.headerLoginTitle}>Войти</Text>
-              </View>
-
-              <View>
-                {/* <Text style={styles.titleLogin}>EMAIL ADDRESS</Text> */}
-                <InputText
-                  textAlign="left"
-                  value={stateForm.email}
-                  placeholder="Адрес электронной почты"
-                  placeholderTextColor="#BDBDBD"
-                  inputmode="email"
-                  textContentType="emailAddress"
-                  keyboardType="email-address"
-                  onFocusOther={() => {
-                    setIsShowKeyboard(true);
-                  }}
-                  onChangeText={value =>
-                    setStateForm(prev => ({ ...prev, email: value }))
-                  }
-                />
-              </View>
-
               <View
                 style={{
-                  marginTop: 20,
+                  ...styles.containerLogIn,
+                  width: dimensions,
                 }}
               >
-                <InputText
-                  textAlign="left"
-                  value={stateForm.password}
-                  paddingRight={95}
-                  placeholder="Пароль"
-                  placeholderTextColor="#BDBDBD"
-                  secureTextEntry={!showPassword}
-                  onFocusOther={() => {
-                    setIsShowKeyboard(true);
+                <View style={styles.headerLogin}>
+                  <Text style={styles.headerLoginTitle}>Войти</Text>
+                </View>
+
+                <View>
+                  {/* <Text style={styles.titleLogin}>EMAIL ADDRESS</Text> */}
+                  <InputText
+                    textAlign="left"
+                    value={stateForm.email}
+                    placeholder="Адрес электронной почты"
+                    placeholderTextColor="#BDBDBD"
+                    inputmode="email"
+                    textContentType="emailAddress"
+                    keyboardType="email-address"
+                    onFocusOther={() => {
+                      setIsShowKeyboard(true);
+                    }}
+                    onChangeText={value =>
+                      setStateForm(prev => ({ ...prev, email: value }))
+                    }
+                  />
+                </View>
+
+                <View
+                  style={{
+                    marginTop: 20,
                   }}
-                  onChangeText={value =>
-                    setStateForm(prev => ({ ...prev, password: value }))
-                  }
-                />
-                <TouchableOpacity
-                  style={styles.btnShowPassword}
-                  activeOpacity={0.8}
-                  onPress={() => setShowPassword(prev => !prev)}
                 >
-                  <Text style={styles.textShowPassword}>Показать</Text>
-                </TouchableOpacity>
+                  <InputText
+                    textAlign="left"
+                    value={stateForm.password}
+                    paddingRight={95}
+                    placeholder="Пароль"
+                    placeholderTextColor="#BDBDBD"
+                    secureTextEntry={!showPassword}
+                    onFocusOther={() => {
+                      setIsShowKeyboard(true);
+                    }}
+                    onChangeText={value =>
+                      setStateForm(prev => ({ ...prev, password: value }))
+                    }
+                  />
+                  <TouchableOpacity
+                    style={styles.btnShowPassword}
+                    activeOpacity={0.8}
+                    onPress={() => setShowPassword(prev => !prev)}
+                  >
+                    <Text style={styles.textShowPassword}>Показать</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
+
+              {
+                <View style={{ ...styles.containerButtons, width: dimensions }}>
+                  <TouchableOpacity
+                    style={styles.btnLogIn}
+                    activeOpacity={0.8}
+                    onPress={handlerLogIn}
+                  >
+                    <Text style={styles.btnTitle}>Войти</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.btnNotAccount}
+                    activeOpacity={0.8}
+                    onPress={handlerNotAccount}
+                  >
+                    <Text style={styles.textNoAccount}>
+                      Нет аккаунта? Зарегистрироваться
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              }
             </View>
-
-            {
-              <View style={{ ...styles.containerButtons, width: dimensions }}>
-                <TouchableOpacity
-                  style={styles.btnLogIn}
-                  activeOpacity={0.8}
-                  onPress={handlerLogIn}
-                >
-                  <Text style={styles.btnTitle}>Войти</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={styles.btnNotAccount}
-                  activeOpacity={0.8}
-                  onPress={handlerNotAccount}
-                >
-                  <Text style={styles.textNoAccount}>
-                    Нет аккаунта? Зарегистрироваться
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            }
           </View>
-        </KeyboardAvoidingView>
-      </MainLayouts>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 
