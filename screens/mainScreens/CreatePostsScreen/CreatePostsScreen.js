@@ -2,10 +2,10 @@ import { Text, View } from 'react-native';
 import { styles } from './CreatePostsScreen.styles';
 import EditPublication from '../../../components/EditPublication/EditPublication';
 
-const CreatePostsScreen = () => {
+const CreatePostsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <EditPublication />
+      <EditPublication navigation={navigation} />
     </View>
   );
 };

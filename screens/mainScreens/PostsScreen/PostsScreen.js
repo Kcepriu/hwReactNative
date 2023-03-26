@@ -1,30 +1,33 @@
-import { Text, View } from 'react-native';
-import {
-  IconPlus,
-  IconCamera,
-  IconX,
-  IconUser,
-  IconUp,
-  IconTrash,
-  IconLike,
-  IconMessage,
-  IconLocation,
-  IconLogOut,
-  IconGrid,
-} from '../../../components/Icons/icons';
-import { styles } from './PostsScreen.styles';
+import React from 'react';
+import { moduleName, Text } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import DefaultPostsScreen from '../../../nestedScreens/DefaultPostsScreen';
+import MapScreen from '../../../nestedScreens/MapScreen';
+import { getHeaderTitle } from '@react-navigation/elements';
+
+const NestedScreen = createStackNavigator();
 
 const PostsScreen = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.userInfo}>
-        <View style={styles.avatar}></View>
-        <View>
-          <Text style={styles.textName}>Natali Romanova</Text>
-          <Text style={styles.textEmail}>email@example.com</Text>
-        </View>
-      </View>
-    </View>
+    <NestedScreen.Navigator>
+      <NestedScreen.Screen
+        name="DefaultPostsScreen"
+        component={DefaultPostsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <NestedScreen.Screen
+        name="MapScreen"
+        component={MapScreen}
+        options={{
+          title: 'TEst',
+          headerMode: 'float',
+        }}
+      />
+
+      {/* <NestedScreen.Screen name="Comments" component={CommentsScreen} /> */}
+    </NestedScreen.Navigator>
   );
 };
 

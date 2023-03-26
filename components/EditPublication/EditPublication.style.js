@@ -29,10 +29,25 @@ export const styles = StyleSheet.create({
     color: '#BDBDBD',
   },
 
-  containerCamera: {
+  camera: {
+    width: '100%',
+    height: 240,
+    backgroundColor: 'red',
+  },
+
+  alreadyPhoto: {
+    // position: 'absolute',
+    width: '100%',
+    height: 240,
+  },
+
+  btnCamera: {
     position: 'absolute',
     top: '50%',
     left: '50%',
+  },
+
+  containerCamera: {
     transform: [{ translateX: -60 / 2 }, { translateY: -60 / 2 }],
     width: 60,
     height: 60,

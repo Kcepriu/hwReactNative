@@ -104,7 +104,7 @@ const RegisterScreen = ({ navigation, route }) => {
             <View
               style={{
                 ...styles.containerMainLogin,
-                marginBottom: isShowKeyboard ? -150 : 0,
+                marginBottom: isShowKeyboard ? 50 : 0,
               }}
             >
               <View style={styles.containerAvatar}>

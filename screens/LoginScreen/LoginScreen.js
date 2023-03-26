@@ -106,7 +106,7 @@ const LoginScreen = ({ navigation, route }) => {
             <View
               style={{
                 ...styles.containerMainLogin,
-                marginBottom: isShowKeyboard ? -250 : 0,
+                marginBottom: isShowKeyboard ? 0 : 0,
               }}
             >
               <View

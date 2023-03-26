@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  containerPhoto: {
+  containerPhotos: {
     width: '100%',
+    marginBottom: 32,
   },
-  photo: {
+  containerPhoto: {
     width: '100%',
     height: 240,
     backgroundColor: '#F6F6F6',
@@ -12,6 +13,11 @@ export const styles = StyleSheet.create({
     borderColor: '#E8E8E8',
     borderRadius: 8,
   },
+  photo: {
+    width: '100%',
+    height: '100%',
+  },
+
   textUnderPhoto: {
     marginTop: 8,
     fontFamily: 'Roboto-Medium',
