@@ -46,6 +46,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
           return (
             <TouchableOpacity
+              key={element.route}
               style={curentStyle}
               accessibilityRole="button"
               onPress={() =>

@@ -5,6 +5,7 @@ export const stylesHeader = StyleSheet.create({
     tabBarActiveTintColor: 'tomato',
     tabBarInactiveTintColor: 'gray',
     tabBarShowLabel: false,
+    tabBarHideOnKeyboard: true,
 
     headerStyle: {
       shadowColor: 'rgba(0, 0, 0)',

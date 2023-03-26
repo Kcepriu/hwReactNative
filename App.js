@@ -63,27 +63,3 @@ export default function App() {
     </View>
   );
 }
-
-{
-  /* <NavigationContainer>
-      <AuthStack.Navigator>
-        <AuthStack.Screen
-          options={{ headerShown: false }}
-          name="Register"
-          component={RegisterScreen}
-        />
-
-        <AuthStack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
-      </AuthStack.Navigator>
-    </NavigationContainer> */
-}
-
-{
-  /* <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <LoginScreen />
-    </View> */
-}
