@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from 'react-native';
 
-import CardPost from '../components/CardPost/CardPost';
+import CardPost from '../../components/CardPost/CardPost';
 
 import { styles } from './DefaultPostsScreen.styles';
 

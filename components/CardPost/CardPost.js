@@ -6,6 +6,9 @@ const CardPost = ({ post, navigation }) => {
   const handlerOpenMap = () => {
     navigation.navigate('MapScreen', { post });
   };
+  const handlerOpenComment = () => {
+    navigation.navigate('CommentsScreen', { post });
+  };
 
   return (
     <>
@@ -20,7 +23,7 @@ const CardPost = ({ post, navigation }) => {
         <View style={styles.containerUnderPhoto}>
           <View style={styles.containerSocials}>
             <View style={styles.containerMessages}>
-              <IconMessage fill="#FF6C00" />
+              <IconMessage fill="#FF6C00" onPress={handlerOpenComment} />
               <Text style={styles.textCount}>{post.countComment}</Text>
             </View>
 
