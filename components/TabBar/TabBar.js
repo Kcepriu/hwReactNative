@@ -49,9 +49,13 @@ const TabBar = ({ state, descriptors, navigation }) => {
               key={element.route}
               style={curentStyle}
               accessibilityRole="button"
-              onPress={() =>
-                navigation.navigate({ name: element.route, merge: true })
-              }
+              onPress={() => {
+                const name =
+                  element.route === 'PostsScreen'
+                    ? 'DefaultPostsScreen'
+                    : element.route;
+                navigation.navigate({ name, merge: true });
+              }}
             >
               {index === 1 ? element.iconActive : element.icon}
             </TouchableOpacity>
@@ -66,9 +70,9 @@ const TabBar = ({ state, descriptors, navigation }) => {
         <TouchableOpacity
           style={styles.buttonDelete}
           accessibilityRole="button"
-          onPress={() =>
-            navigation.navigate({ name: element.route, merge: true })
-          }
+          onPress={() => {
+            navigation.navigate({ name: 'DefaultPostsScreen', merge: true });
+          }}
         >
           {element.icon}
         </TouchableOpacity>

@@ -23,3 +23,5 @@ export const stylesHeader = StyleSheet.create({
     },
   },
 });
+
+//Комментарии

@@ -24,28 +24,28 @@ const DefaultPostsScreen = ({ route, navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {/* paddingTop: StatusBar.currentHeight */}
-      {/* <ScrollView> */}
-      <View style={styles.container}>
-        <View style={styles.userInfo}>
-          <View style={styles.avatar}></View>
+      <ScrollView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+        <View style={styles.container}>
+          <View style={styles.userInfo}>
+            <View style={styles.avatar}></View>
+            <View>
+              <Text style={styles.textName}>Natali Romanova</Text>
+              <Text style={styles.textEmail}>email@example.com</Text>
+            </View>
+          </View>
           <View>
-            <Text style={styles.textName}>Natali Romanova</Text>
-            <Text style={styles.textEmail}>email@example.com</Text>
+            {/* <SafeAreaView style={{ paddingTop: StatusBar.currentHeight }}> */}
+            <FlatList
+              data={posts}
+              keyExtractor={item => item.id.toString()}
+              renderItem={({ item }) => (
+                <CardPost post={item} navigation={navigation} />
+              )}
+            />
+            {/* </SafeAreaView> */}
           </View>
         </View>
-        <View>
-          {/* <SafeAreaView style={{ paddingTop: StatusBar.currentHeight }}> */}
-          <FlatList
-            data={posts}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => (
-              <CardPost post={item} navigation={navigation} />
-            )}
-          />
-          {/* </SafeAreaView> */}
-        </View>
-      </View>
-      {/* </ScrollView> */}
+      </ScrollView>
     </SafeAreaView>
   );
 };

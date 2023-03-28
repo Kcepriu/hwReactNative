@@ -34,7 +34,7 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.titleName}>Natali Romanova</Text>
           {/* <SafeAreaView style={styles.scroolContainer}> */}
           {/* <ScrollView> */}
-          <CardPost />
+          {/* <CardPost /> */}
           {/* <CardPost /> */}
           {/* </ScrollView> */}
           {/* </SafeAreaView>  */}

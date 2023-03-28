@@ -1,60 +1,22 @@
 import { createStackNavigator } from '@react-navigation/stack';
-
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+const NestedScreen = createStackNavigator();
 
 //Import Screens
 import PostsScreen from '../mainScreens/PostsScreen/PostsScreen';
-import CreatePostsScreen from '../mainScreens/CreatePostsScreen/CreatePostsScreen';
-import ProfileScreen from '../mainScreens/ProfileScreen/ProfileScreen';
-
-import DefaultPostsScreen from '../nestedScreens/DefaultPostsScreen';
 import MapScreen from '../nestedScreens/MapScreen/MapScreen';
 import CommentsScreen from '../nestedScreens/CommentsScreen/CommentsScreen';
 
-// import Components
-import TabBar from '../../components/TabBar/TabBar';
-import {
-  BtnHeaderLogOut,
-  BtnToPublications,
-} from '../../components/BtnHeader/BtnHeader';
+import { stylesHeader } from '../mainScreens/PostsScreen/Header.styles';
 
-// import STYLES
-import { stylesHeader } from './Header.styles';
-import { moduleName, Text } from 'react-native';
-
-const MainTabs = createBottomTabNavigator();
-
-const NestedScreen = createStackNavigator();
 //{{ tabBarShowLabel: false }}>
 
-const TEst = () => {
-  return (
-    <NavigationContainer>
-      <NestedScreen.Navigator>
-        <NestedScreen.Screen
-          name="PostsScreen"
-          component={PostsScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <NestedScreen.Screen
-          name="MapScreen"
-          component={MapScreen}
-          options={{
-            headerShown: true,
-            headerTitle: 'Hello',
-          }}
-        />
-        <NestedScreen.Screen name="CommentsScreen" component={CommentsScreen} />
-      </NestedScreen.Navigator>
-    </NavigationContainer>
-  );
-};
 const HomeScreen = ({ navigation, route }) => {
   return (
-    <NestedScreen.Navigator>
+    <NestedScreen.Navigator
+      screenOptions={({ route }) => ({
+        ...stylesHeader.tabNavigatiom,
+      })}
+    >
       <NestedScreen.Screen
         name="PostsScreen"
         component={PostsScreen}
@@ -66,11 +28,16 @@ const HomeScreen = ({ navigation, route }) => {
         name="MapScreen"
         component={MapScreen}
         options={{
-          headerShown: true,
-          headerTitle: 'Hello',
+          headerTitle: 'Карта',
         }}
       />
-      <NestedScreen.Screen name="CommentsScreen" component={CommentsScreen} />
+      <NestedScreen.Screen
+        name="CommentsScreen"
+        component={CommentsScreen}
+        options={{
+          headerTitle: 'Комментарии',
+        }}
+      />
     </NestedScreen.Navigator>
   );
 };

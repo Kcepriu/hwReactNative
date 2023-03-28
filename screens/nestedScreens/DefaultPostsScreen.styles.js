@@ -51,4 +51,8 @@ export const styles = StyleSheet.create({
     lineHeight: 13,
     color: 'rgba(33, 33, 33, 0.8)',
   },
+
+  posts: {
+    backgroundColor: 'red',
+  },
 });

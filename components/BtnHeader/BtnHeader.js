@@ -19,7 +19,7 @@ export const BtnToPublications = ({ navigation }) => {
     <TouchableOpacity
       style={styles.btnToPublications}
       activeOpacity={0.8}
-      onPress={() => navigation.navigate('PostsScreen')}
+      onPress={() => navigation.navigate('DefaultPostsScreen')}
     >
       <IconLeft />
     </TouchableOpacity>
