@@ -35,13 +35,16 @@ const DefaultPostsScreen = ({ route, navigation }) => {
           </View>
           <View>
             {/* <SafeAreaView style={{ paddingTop: StatusBar.currentHeight }}> */}
-            <FlatList
+            {posts.map(item => (
+              <CardPost post={item} navigation={navigation} />
+            ))}
+            {/* <FlatList
               data={posts}
               keyExtractor={item => item.id.toString()}
               renderItem={({ item }) => (
                 <CardPost post={item} navigation={navigation} />
               )}
-            />
+            /> */}
             {/* </SafeAreaView> */}
           </View>
         </View>
