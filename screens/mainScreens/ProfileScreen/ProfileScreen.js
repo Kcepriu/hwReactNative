@@ -1,9 +1,15 @@
 import { Text, View, Image, SafeAreaView, ScrollView } from 'react-native';
+
+import useAuth from '../../../hooks/useAuth';
+
 import { styles } from './ProfileScreen.styles';
 import CardPost from '../../../components/CardPost/CardPost';
 import { BtnHeaderLogOut } from '../../../components/BtnHeader/BtnHeader';
 
 const ProfileScreen = ({ navigation }) => {
+  const {
+    user: { displayName, email, photoURL, uid },
+  } = useAuth();
   return (
     <>
       <Image
@@ -31,7 +37,7 @@ const ProfileScreen = ({ navigation }) => {
             <BtnHeaderLogOut style={styles.btnLogOut} navigation={navigation} />
           </View>
 
-          <Text style={styles.titleName}>Natali Romanova</Text>
+          <Text style={styles.titleName}>{displayName}</Text>
           {/* <SafeAreaView style={styles.scroolContainer}> */}
           {/* <ScrollView> */}
           {/* <CardPost /> */}

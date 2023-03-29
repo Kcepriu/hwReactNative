@@ -15,6 +15,9 @@ import InputText from '../../components/InputText/InputText';
 import BtnAvatar from '../../components/BtnAvatar/BtnAvatar';
 import { styles } from './RegisterScreen.styles';
 
+import { registerDB } from '../../redux/auth/operation';
+import { useDispatch } from 'react-redux';
+
 const initialStateForm = {
   login: '',
   email: '',
@@ -26,6 +29,7 @@ const RegisterScreen = ({ navigation, route }) => {
   const [stateForm, setStateForm] = useState(initialStateForm);
   const [showPassword, setShowPassword] = useState(false);
 
+  const dispatch = useDispatch();
   const [dimensions, setDimensions] = useState(
     Dimensions.get('window').width - 16 * 2
   );
@@ -64,12 +68,7 @@ const RegisterScreen = ({ navigation, route }) => {
   };
 
   const handlerLogIn = () => {
-    keyboardHide();
-
-    console.log(stateForm);
-
-    //setStateForm(initialStateForm);
-    navigation.navigate('HomeScreen');
+    dispatch(registerDB(stateForm));
   };
 
   const handlerNotAccount = () => {

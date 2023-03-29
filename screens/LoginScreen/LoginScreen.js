@@ -12,6 +12,9 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
+import { useDispatch } from 'react-redux';
+import { logInUser } from '../../redux/auth/operation';
+
 import { styles } from './LoginScreen.styles';
 import InputText from '../../components/InputText/InputText';
 
@@ -21,6 +24,7 @@ const initialStateForm = {
 };
 
 const LoginScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
   const [stateForm, setStateForm] = useState(initialStateForm);
@@ -66,12 +70,7 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   const handlerLogIn = () => {
-    keyboardHide();
-
-    console.log(stateForm);
-
-    //setStateForm(initialStateForm);
-    navigation.navigate('HomeScreen');
+    dispatch(logInUser(stateForm));
   };
 
   const handlerNotAccount = () => {

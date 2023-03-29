@@ -13,7 +13,7 @@ import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
 
-import { IconLocation, IconCamera } from '../Icons/icons';
+import { IconLocation, IconCamera, IconTrash } from '../Icons/icons';
 
 import { styles } from './EditPublication.style';
 
@@ -97,10 +97,7 @@ const EditPublication = ({ navigation }) => {
         id: Date.now(),
       };
 
-      //Clear local state
-      setPhoto('');
-      setName('');
-      setLocation('');
+      clearPost();
 
       navigation.navigate('DefaultPostsScreen', { newPost });
     };
@@ -123,87 +120,106 @@ const EditPublication = ({ navigation }) => {
     setPhoto(curentPhoto.uri);
   };
 
-  const getPosition = async () => {
-    const location = await Location.getCurrentPositionAsync();
-    return location;
+  const handlerDeletePost = () => {
+    clearPost();
+    navigation.navigate({ name: 'DefaultPostsScreen', merge: true });
+  };
+
+  const clearPost = () => {
+    //Clear local state
+    setPhoto('');
+    setName('');
+    setLocation('');
   };
 
   return (
     // containerEditPublication
     <View style={styles.containerEditPublication}>
-      <TouchableWithoutFeedback onPress={keyboardHide}>
-        <View>
-          {/* containerPhoto/ */}
-          <View style={styles.containerPhoto}>
-            {/* photo */}
-            <View style={styles.photo}>
-              {!photo ? (
-                <Camera style={styles.camera} ref={setCamera}></Camera>
-              ) : (
-                <Image source={{ uri: photo }} style={styles.alreadyPhoto} />
-              )}
+      <View>
+        <TouchableWithoutFeedback onPress={keyboardHide}>
+          <View>
+            {/* containerPhoto/ */}
+            <View style={styles.containerPhoto}>
+              {/* photo */}
+              <View style={styles.photo}>
+                {!photo ? (
+                  <Camera style={styles.camera} ref={setCamera}></Camera>
+                ) : (
+                  <Image source={{ uri: photo }} style={styles.alreadyPhoto} />
+                )}
 
-              <TouchableOpacity style={styles.btnCamera} onPress={takePhoto}>
-                <View
-                  style={{
-                    ...styles.containerCamera,
-                    backgroundColor: !photo
-                      ? '#FFFFFF'
-                      : 'rgba(255, 255, 255, 0.3)',
-                  }}
-                >
-                  <IconCamera fill={!photo ? '#BDBDBD' : '#FFFFFF'} />
-                </View>
-              </TouchableOpacity>
+                <TouchableOpacity style={styles.btnCamera} onPress={takePhoto}>
+                  <View
+                    style={{
+                      ...styles.containerCamera,
+                      backgroundColor: !photo
+                        ? '#FFFFFF'
+                        : 'rgba(255, 255, 255, 0.3)',
+                    }}
+                  >
+                    <IconCamera fill={!photo ? '#BDBDBD' : '#FFFFFF'} />
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.textUnderPhoto}>
+                {!photo ? 'Загрузите фото' : 'Редактировать фото'}
+              </Text>
             </View>
-            <Text style={styles.textUnderPhoto}>
-              {!photo ? 'Загрузите фото' : 'Редактировать фото'}
-            </Text>
-          </View>
 
-          {/* Input name */}
-          <TextInput
-            style={styles.input}
-            textAlign="left"
-            value={name}
-            placeholder="Название..."
-            placeholderTextColor="#BDBDBD"
-            onChangeText={value => setName(value)}
-          />
-
-          {/* Input location */}
-          <View style={{ position: 'relative' }}>
+            {/* Input name */}
             <TextInput
-              style={{ ...styles.input, ...styles.inputLocation }}
+              style={styles.input}
               textAlign="left"
-              value={location}
-              placeholder="Местность..."
+              value={name}
+              placeholder="Название..."
               placeholderTextColor="#BDBDBD"
-              // onPressIn={() => console.log('location')}
-              onChangeText={value => setLocation(value)}
+              onChangeText={value => setName(value)}
             />
-            <IconLocation style={styles.iconLocation} />
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
 
-      <TouchableOpacity
-        style={{
-          ...styles.btnPublication,
-          backgroundColor: isActive ? '#FF6C00' : '#F6F6F6',
-        }}
-        activeOpacity={0.8}
-        onPress={handlerPublication}
-      >
-        <Text
+            {/* Input location */}
+            <View style={{ position: 'relative' }}>
+              <TextInput
+                style={{ ...styles.input, ...styles.inputLocation }}
+                textAlign="left"
+                value={location}
+                placeholder="Местность..."
+                placeholderTextColor="#BDBDBD"
+                // onPressIn={() => console.log('location')}
+                onChangeText={value => setLocation(value)}
+              />
+              <IconLocation style={styles.iconLocation} />
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+
+        <TouchableOpacity
           style={{
-            ...styles.btnTitle,
-            color: isActive ? '#FFFFFF' : '#BDBDBD',
+            ...styles.btnPublication,
+            backgroundColor: isActive ? '#FF6C00' : '#F6F6F6',
           }}
+          activeOpacity={0.8}
+          onPress={handlerPublication}
         >
-          Опубликовать
-        </Text>
-      </TouchableOpacity>
+          <Text
+            style={{
+              ...styles.btnTitle,
+              color: isActive ? '#FFFFFF' : '#BDBDBD',
+            }}
+          >
+            Опубликовать
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.tabBarDelete}>
+        <TouchableOpacity
+          style={styles.buttonDelete}
+          accessibilityRole="button"
+          onPress={handlerDeletePost}
+        >
+          <IconTrash fill="rgba(189, 189, 189, 1)" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

@@ -1,23 +1,19 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Provider } from 'react-redux';
+
+import { View } from 'react-native';
 import { useCallback } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import LoginScreen from './screens/LoginScreen/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen/RegisterScreen';
-import HomeScreen from './screens/HomeScreen/HomeScreen';
+import { store } from './redux/store';
 
-// import { LogBox } from 'react-native';
-// LogBox.ignoreLogs(['Remote debugger']);
+import Main from './components/Main';
 
 SplashScreen.preventAutoHideAsync();
-
-const AuthStack = createStackNavigator(); // вказує на групу навігаторів
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -37,29 +33,12 @@ export default function App() {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <NavigationContainer>
-        <AuthStack.Navigator>
-          {/*  Login */}
-          <AuthStack.Screen
-            options={{ headerShown: false }}
-            name="Login"
-            component={LoginScreen}
-          />
-          {/*  Register */}
-          <AuthStack.Screen
-            options={{ headerShown: false }}
-            name="Register"
-            component={RegisterScreen}
-          />
-          {/*  HomeScreen */}
-          <AuthStack.Screen
-            options={{ headerShown: false }}
-            name="HomeScreen"
-            component={HomeScreen}
-          />
-        </AuthStack.Navigator>
-      </NavigationContainer>
-    </View>
+    <Provider store={store}>
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <NavigationContainer>
+          <Main />
+        </NavigationContainer>
+      </View>
+    </Provider>
   );
 }

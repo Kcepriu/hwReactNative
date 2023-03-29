@@ -64,20 +64,21 @@ const TabBar = ({ state, descriptors, navigation }) => {
       </View>
     );
   } else {
-    const element = routes[state.index][0];
-    return (
-      <View style={styles.tabBarDelete}>
-        <TouchableOpacity
-          style={styles.buttonDelete}
-          accessibilityRole="button"
-          onPress={() => {
-            navigation.navigate({ name: 'DefaultPostsScreen', merge: true });
-          }}
-        >
-          {element.icon}
-        </TouchableOpacity>
-      </View>
-    );
+    return null;
+    // const element = routes[state.index][0];
+    // return (
+    //   <View style={styles.tabBarDelete}>
+    //     <TouchableOpacity
+    //       style={styles.buttonDelete}
+    //       accessibilityRole="button"
+    //       onPress={() => {
+    //         navigation.navigate({ name: 'DefaultPostsScreen', merge: true });
+    //       }}
+    //     >
+    //       {element.icon}
+    //     </TouchableOpacity>
+    //   </View>
+    // );
   }
 };
 

@@ -7,7 +7,9 @@ export const styles = StyleSheet.create({
     paddingTop: 32,
     paddingLeft: 16,
     paddingRight: 16,
+    paddingBottom: 0,
     backgroundColor: '#FFF',
+    justifyContent: 'space-between',
   },
 
   containerPhoto: {},
@@ -110,5 +112,25 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 13,
     left: 0,
+  },
+
+  tabBarDelete: {
+    height: 83,
+    paddingTop: 9,
+
+    flexDirection: 'row',
+    gap: 31,
+
+    justifyContent: 'center',
+
+    backgroundColor: '#FFF',
+  },
+  buttonDelete: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 70,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F6F6F6',
   },
 });
