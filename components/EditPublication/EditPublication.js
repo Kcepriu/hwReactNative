@@ -8,22 +8,37 @@ import {
   TextInput,
   Keyboard,
 } from 'react-native';
-
+import { useDispatch } from 'react-redux';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
+
+import { savePhotoInStorage } from '../../firebase/operation';
+import { addPost } from '../../redux/posts/operation';
+import useAuth from '../../hooks/useAuth';
+import usePosts from '../../hooks/usePosts';
+import { statusOperation } from '../../redux/posts/statusOperation';
 
 import { IconLocation, IconCamera, IconTrash } from '../Icons/icons';
 
 import { styles } from './EditPublication.style';
 
 const EditPublication = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const {
+    user: { uid },
+  } = useAuth();
+
+  const { performedOperation } = usePosts();
+
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
   const [permissionCamera, requestPermissionCamera] =
     Camera.useCameraPermissions();
+
   const [permissionMedia, requestPermissionMedia] =
     MediaLibrary.usePermissions();
+
   const [permissionLocation, requestPermissionLocation] =
     Location.useBackgroundPermissions();
   // Location.useForegroundPermissions();
@@ -70,12 +85,21 @@ const EditPublication = ({ navigation }) => {
     })();
   });
 
+  useEffect(() => {
+    if (performedOperation === statusOperation.addPostOK) {
+      clearPost();
+
+      navigation.navigate('DefaultPostsScreen');
+    }
+  }, [performedOperation]);
   // HANDLERS
+
   const handlerPublication = () => {
     if (!isActive) return;
     if (!permissionLocation?.granted) return;
 
     const sendPost = async () => {
+      //Get location
       const currentLocation = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Highest,
         maximumAge: 10000,
@@ -87,19 +111,20 @@ const EditPublication = ({ navigation }) => {
         longitude: currentLocation.coords.longitude,
       };
 
+      //Send photo to storage
+      const urlPhoto = await savePhotoInStorage(photo);
+
       const newPost = {
-        photo,
         name,
         location,
         geoLocation,
         countComment: 0,
         countLikes: 0,
-        id: Date.now(),
+        urlPhoto,
+        userId: uid,
       };
 
-      clearPost();
-
-      navigation.navigate('DefaultPostsScreen', { newPost });
+      dispatch(addPost(newPost));
     };
 
     sendPost();

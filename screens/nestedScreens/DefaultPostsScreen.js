@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   Text,
   View,
@@ -7,23 +7,28 @@ import {
   ScrollView,
   StatusBar,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+
 import useAuth from '../../hooks/useAuth';
+import usePosts from '../../hooks/usePosts';
+import { getPosts } from '../../redux/posts/operation';
 
 import CardPost from '../../components/CardPost/CardPost';
 
 import { styles } from './DefaultPostsScreen.styles';
 
-const DefaultPostsScreen = ({ route, navigation }) => {
-  const [posts, setPosts] = useState([]);
+const DefaultPostsScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
 
   const {
     user: { displayName, email, photoURL, uid },
   } = useAuth();
+
+  const { userPosts } = usePosts();
+
   useEffect(() => {
-    if (route?.params?.newPost) {
-      setPosts(prev => [...prev, route?.params?.newPost]);
-    }
-  }, [route.params]);
+    dispatch(getPosts(uid));
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -39,11 +44,11 @@ const DefaultPostsScreen = ({ route, navigation }) => {
           </View>
           <View>
             {/* <SafeAreaView style={{ paddingTop: StatusBar.currentHeight }}> */}
-            {posts.map(item => (
+            {userPosts.map(item => (
               <CardPost
                 post={item}
                 navigation={navigation}
-                key={item.id.toString()}
+                key={item.documentId.toString()}
               />
             ))}
             {/* <FlatList

@@ -19,8 +19,8 @@ import { styles } from './LoginScreen.styles';
 import InputText from '../../components/InputText/InputText';
 
 const initialStateForm = {
-  email: '',
-  password: '',
+  email: 'serhii@gmail.com',
+  password: '123456',
 };
 
 const LoginScreen = ({ navigation, route }) => {

@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
+    marginTop: 167,
     flex: 1,
+    width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
@@ -10,6 +12,7 @@ export const styles = StyleSheet.create({
   containerMainLogin: {
     width: '100%',
     backgroundColor: '#fff',
+
     alignItems: 'center',
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
@@ -50,5 +53,8 @@ export const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
     backgroundColor: 'transparent',
+  },
+  wrapPosts: {
+    width: '100%',
   },
 });
