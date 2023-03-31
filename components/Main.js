@@ -14,8 +14,6 @@ const AuthStack = createStackNavigator(); // вказує на групу нав
 const Main = () => {
   const { isAuth, user } = useAuth();
 
-  console.log('user', user);
-
   useEffect(() => {
     addListennerStateChangeAuth();
   }, []);

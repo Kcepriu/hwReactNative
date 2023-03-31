@@ -4,6 +4,7 @@ import {
   selectPerformedOperation,
   selectCurentPost,
   selectComments,
+  selectIsRefresing,
 } from '../redux/posts/selectors';
 
 const usePosts = () => {
@@ -11,7 +12,9 @@ const usePosts = () => {
   const performedOperation = useSelector(selectPerformedOperation);
   const curentPost = useSelector(selectCurentPost);
   const comments = useSelector(selectComments);
-  return { userPosts, performedOperation, curentPost, comments };
+  const isRefresing = useSelector(selectIsRefresing);
+
+  return { userPosts, performedOperation, curentPost, comments, isRefresing };
 };
 
 export default usePosts;

@@ -15,6 +15,7 @@
     "@react-navigation/stack": "^6.3.16",
     "@reduxjs/toolkit": "^1.9.3",
     "brew": "^0.0.8",
+    "date-fns": "^2.29.3",
     "expo": "~48.0.5",
     "expo-app-loading": "^2.1.1",
     "expo-camera": "~13.2.1",

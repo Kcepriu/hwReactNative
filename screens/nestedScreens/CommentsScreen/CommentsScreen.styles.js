@@ -12,6 +12,10 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
+  containerTop: {
+    width: '100%',
+  },
+
   containerPhoto: {
     width: '100%',
     height: 240,
@@ -19,6 +23,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E8E8E8',
     borderRadius: 8,
+    marginBottom: 32,
   },
   photo: {
     width: '100%',
@@ -26,7 +31,13 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
   },
 
+  containerComment: {
+    width: '100%',
+    gap: 24,
+  },
+
   wrapperInput: {
+    paddingTop: 8,
     width: '100%',
   },
 
@@ -55,7 +66,7 @@ export const styles = StyleSheet.create({
 
   btnComment: {
     position: 'absolute',
-    top: 8,
+    top: 16,
     right: 8,
     width: 34,
     height: 34,

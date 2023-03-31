@@ -1,6 +1,7 @@
 import { Text, View, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { increaseLikesToPost } from '../../redux/posts/operation';
+import { getComments } from '../../redux/posts/operation';
 import { IconLocation, IconLike, IconMessage } from '../Icons/icons';
 import { styles } from './CardPost.styles';
 
@@ -11,6 +12,7 @@ const CardPost = ({ post, navigation }) => {
   };
 
   const handlerOpenComment = () => {
+    dispatch(getComments());
     navigation.navigate('CommentsScreen', { post });
   };
 

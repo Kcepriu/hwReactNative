@@ -63,8 +63,6 @@ const LoginScreen = ({ navigation, route }) => {
   }, [route]);
 
   const keyboardHide = () => {
-    console.log('keyboardHide');
-
     setIsShowKeyboard(false);
     Keyboard.dismiss();
   };

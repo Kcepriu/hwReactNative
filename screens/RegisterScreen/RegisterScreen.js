@@ -103,7 +103,7 @@ const RegisterScreen = ({ navigation, route }) => {
             <View
               style={{
                 ...styles.containerMainLogin,
-                marginBottom: isShowKeyboard ? 50 : 0,
+                marginBottom: isShowKeyboard ? 90 : 0,
               }}
             >
               <View style={styles.containerAvatar}>
@@ -112,7 +112,7 @@ const RegisterScreen = ({ navigation, route }) => {
               width={120}
               height={120}
               // source={require('@expo/snack-static/react-native-logo.png')}
-            /> */}
+              /> */}
 
                 <BtnAvatar />
               </View>

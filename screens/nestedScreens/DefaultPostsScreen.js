@@ -1,17 +1,11 @@
-import { useEffect } from 'react';
-import {
-  Text,
-  View,
-  FlatList,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-} from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Text, View, FlatList, SafeAreaView, ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
 import usePosts from '../../hooks/usePosts';
 import { getPosts } from '../../redux/posts/operation';
+import { statusOperation } from '../../redux/posts/statusOperation';
 
 import CardPost from '../../components/CardPost/CardPost';
 
@@ -24,16 +18,26 @@ const DefaultPostsScreen = ({ navigation }) => {
     user: { displayName, email, photoURL, uid },
   } = useAuth();
 
-  const { userPosts } = usePosts();
+  const { userPosts, performedOperation } = usePosts();
+
+  const scrollViewRef = useRef();
 
   useEffect(() => {
     dispatch(getPosts(uid));
   }, [dispatch]);
 
+  useEffect(() => {
+    if (performedOperation === statusOperation.addPostOK)
+      scrollViewRef.current.scrollToEnd({ animated: true });
+  }, [performedOperation]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {/* paddingTop: StatusBar.currentHeight */}
-      <ScrollView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+      <ScrollView
+        style={{ flex: 1, backgroundColor: '#FFFFFF' }}
+        ref={scrollViewRef}
+      >
         <View style={styles.container}>
           <View style={styles.userInfo}>
             <View style={styles.avatar}></View>
@@ -43,7 +47,6 @@ const DefaultPostsScreen = ({ navigation }) => {
             </View>
           </View>
           <View>
-            {/* <SafeAreaView style={{ paddingTop: StatusBar.currentHeight }}> */}
             {userPosts.map(item => (
               <CardPost
                 post={item}
@@ -58,7 +61,6 @@ const DefaultPostsScreen = ({ navigation }) => {
                 <CardPost post={item} navigation={navigation} />
               )}
             /> */}
-            {/* </SafeAreaView> */}
           </View>
         </View>
       </ScrollView>

@@ -25,11 +25,13 @@ import { styles } from './EditPublication.style';
 
 const EditPublication = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [isSendData, setIsSendData] = useState(false);
+
   const {
     user: { uid },
   } = useAuth();
 
-  const { performedOperation } = usePosts();
+  const { performedOperation, isRefresing } = usePosts();
 
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
@@ -41,7 +43,6 @@ const EditPublication = ({ navigation }) => {
 
   const [permissionLocation, requestPermissionLocation] =
     Location.useBackgroundPermissions();
-  // Location.useForegroundPermissions();
 
   const [photo, setPhoto] = useState('');
   const [name, setName] = useState('');
@@ -52,7 +53,6 @@ const EditPublication = ({ navigation }) => {
 
   useEffect(() => {
     setIsActive(!!photo && !!name && !!location);
-    // setIsActive(photo || name || location);
   }, [photo, name, location]);
 
   // * Permission
@@ -65,6 +65,7 @@ const EditPublication = ({ navigation }) => {
       requestPermissionCamera(status);
     })();
   });
+
   //Permission to files
   useEffect(() => {
     if (permissionMedia?.granted) return;
@@ -74,27 +75,32 @@ const EditPublication = ({ navigation }) => {
       requestPermissionMedia(status);
     })();
   });
+
   //Permission to Location
   useEffect(() => {
     if (permissionLocation?.granted) return;
 
     (async () => {
-      // const status = await Location.requestForegroundPermissionsAsync();
       const status = await Location.getBackgroundPermissionsAsync();
       requestPermissionLocation(status);
     })();
   });
 
   useEffect(() => {
+    if (performedOperation === statusOperation.addPostError) {
+      setIsSendData(false);
+    }
+
     if (performedOperation === statusOperation.addPostOK) {
       clearPost();
-
+      setIsSendData(false);
       navigation.navigate('DefaultPostsScreen');
     }
   }, [performedOperation]);
-  // HANDLERS
 
+  // HANDLERS
   const handlerPublication = () => {
+    setIsSendData(true);
     if (!isActive) return;
     if (!permissionLocation?.granted) return;
 
@@ -122,8 +128,8 @@ const EditPublication = ({ navigation }) => {
         countLikes: 0,
         urlPhoto,
         userId: uid,
+        dateDocument: Date.now(),
       };
-
       dispatch(addPost(newPost));
     };
 
@@ -147,6 +153,7 @@ const EditPublication = ({ navigation }) => {
 
   const handlerDeletePost = () => {
     clearPost();
+    setIsSendData(false);
     navigation.navigate({ name: 'DefaultPostsScreen', merge: true });
   };
 
@@ -193,47 +200,63 @@ const EditPublication = ({ navigation }) => {
 
             {/* Input name */}
             <TextInput
-              style={styles.input}
+              style={{
+                ...styles.input,
+                marginTop: isShowKeyboard ? 16 : 32,
+              }}
               textAlign="left"
               value={name}
               placeholder="Название..."
               placeholderTextColor="#BDBDBD"
               onChangeText={value => setName(value)}
+              onFocus={() => {
+                setIsShowKeyboard(true);
+              }}
             />
 
             {/* Input location */}
             <View style={{ position: 'relative' }}>
               <TextInput
-                style={{ ...styles.input, ...styles.inputLocation }}
+                style={{
+                  ...styles.input,
+                  ...styles.inputLocation,
+                  marginTop: isShowKeyboard ? 16 : 32,
+                }}
                 textAlign="left"
                 value={location}
                 placeholder="Местность..."
                 placeholderTextColor="#BDBDBD"
                 // onPressIn={() => console.log('location')}
                 onChangeText={value => setLocation(value)}
+                onFocus={() => {
+                  setIsShowKeyboard(true);
+                }}
               />
               <IconLocation style={styles.iconLocation} />
             </View>
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableOpacity
-          style={{
-            ...styles.btnPublication,
-            backgroundColor: isActive ? '#FF6C00' : '#F6F6F6',
-          }}
-          activeOpacity={0.8}
-          onPress={handlerPublication}
-        >
-          <Text
+        {!isSendData && (
+          <TouchableOpacity
+            // disabled={sendData}
             style={{
-              ...styles.btnTitle,
-              color: isActive ? '#FFFFFF' : '#BDBDBD',
+              ...styles.btnPublication,
+              backgroundColor: isActive ? '#FF6C00' : '#F6F6F6',
             }}
+            activeOpacity={0.8}
+            onPress={handlerPublication}
           >
-            Опубликовать
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                ...styles.btnTitle,
+                color: isActive ? '#FFFFFF' : '#BDBDBD',
+              }}
+            >
+              Опубликовать
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={styles.tabBarDelete}>

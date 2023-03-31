@@ -5,6 +5,7 @@ import {
   addDoc,
   query,
   where,
+  orderBy,
   getDocs,
   getDoc,
 } from 'firebase/firestore';
@@ -27,7 +28,11 @@ export const addPost = createAsyncThunk('posts/addPost', async post => {
 // * 2 getPosts(userId)
 export const getPosts = createAsyncThunk('posts/getPosts', async userId => {
   try {
-    const q = query(collection(db, 'posts'), where('userId', '==', userId));
+    const q = query(
+      collection(db, 'posts'),
+      where('userId', '==', userId),
+      orderBy('dateDocument')
+    );
 
     const querySnapshot = await getDocs(q);
 
@@ -72,11 +77,12 @@ export const getComments = createAsyncThunk(
   'posts/getComments',
   async documentId => {
     try {
-      console.log('getComments', documentId);
+      if (!documentId) return [];
 
       const q = query(
         collection(db, 'comments'),
-        where('documentId', '==', documentId)
+        where('documentId', '==', documentId),
+        orderBy('datePublacation')
       );
 
       const querySnapshot = await getDocs(q);
@@ -84,6 +90,7 @@ export const getComments = createAsyncThunk(
       const result = [];
       querySnapshot.forEach(doc => {
         const comment = doc.data();
+        comment.postId = doc.id;
         result.push(comment);
       });
 
@@ -101,8 +108,10 @@ export const addComments = createAsyncThunk(
   async comment => {
     try {
       const commentRef = await addDoc(collection(db, 'comments'), comment);
+
       const commentSnap = await getDoc(commentRef);
       const newComment = commentSnap.data();
+      newComment.postId = commentRef.id;
 
       // Incress count comment
       const { documentId } = comment;

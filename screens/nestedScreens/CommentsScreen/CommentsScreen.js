@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   TextInput,
@@ -7,15 +7,19 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+  SafeAreaView,
+  ScrollView,
 } from 'react-native';
 
 import useAuth from '../../../hooks/useAuth';
 import usePosts from '../../../hooks/usePosts';
 import { addComments, getComments } from '../../../redux/posts/operation';
+import { statusOperation } from '../../../redux/posts/statusOperation';
 
 import { IconUp } from '../../../components/Icons/icons';
 import { styles } from './CommentsScreen.styles';
-import { statusOperation } from '../../../redux/posts/statusOperation';
+
+import OneComment from '../../../components/OneComment/OneComment';
 
 const CommentsScreen = ({ route }) => {
   const dispatch = useDispatch();
@@ -23,12 +27,13 @@ const CommentsScreen = ({ route }) => {
     user: { uid },
   } = useAuth();
 
-  const { comments, performedOperation } = usePosts();
+  const { comments, performedOperation, isRefresing } = usePosts();
 
   const [newComment, setNewComment] = useState('');
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const scrollViewRef = useRef();
 
-  const photo = route.params.post.photo;
+  const urlPhoto = route.params.post.urlPhoto;
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
@@ -41,6 +46,7 @@ const CommentsScreen = ({ route }) => {
 
   useEffect(() => {
     if (performedOperation === statusOperation.addCommentOK) {
+      scrollViewRef.current.scrollToEnd();
       setNewComment('');
       keyboardHide();
     }
@@ -54,18 +60,37 @@ const CommentsScreen = ({ route }) => {
         documentId: route.params.post.documentId,
         userId: uid,
         comment: newComment,
+        datePublacation: Date.now(),
       })
     );
   };
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={keyboardHide}>
+      <SafeAreaView style={{ flex: 1 }}>
+        {/* <TouchableWithoutFeedback onPress={keyboardHide}> */}
         <View style={styles.container}>
-          <View style={styles.containerPhoto}>
-            <Image style={styles.photo} source={{ uri: photo }} />
-          </View>
-          {/* comments */}
+          <ScrollView style={{ flex: 1, width: '100%' }} ref={scrollViewRef}>
+            <View style={styles.containerTop}>
+              <View style={styles.containerPhoto}>
+                <Image style={styles.photo} source={{ uri: urlPhoto }} />
+              </View>
+              {/* comments */}
+
+              {/* {!isRefresing && ( */}
+              <View style={styles.containerComment}>
+                {comments.map(post => (
+                  <OneComment
+                    key={post.postId}
+                    post={post}
+                    currentUserId={uid}
+                  ></OneComment>
+                ))}
+              </View>
+              {/* )} */}
+            </View>
+          </ScrollView>
+
           <View
             style={{
               ...styles.wrapperInput,
@@ -94,7 +119,8 @@ const CommentsScreen = ({ route }) => {
             </TouchableOpacity>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+        {/* </TouchableWithoutFeedback> */}
+      </SafeAreaView>
     </>
   );
 };

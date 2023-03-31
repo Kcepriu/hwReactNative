@@ -32,11 +32,14 @@ const postsSlice = createSlice({
   extraReducers: {
     // * 1 addPost
     [addPost.pending]: handlePending,
-    [addPost.rejected]: handleRejected,
+    [addPost.rejected](state, action) {
+      handleRejected(state, action);
+      state.performedOperation = statusOperation.addPostError;
+    },
     [addPost.fulfilled](state, action) {
       //Зареєструвалися
       state.isRefresing = false;
-      state.userPosts.unshift(action.payload);
+      state.userPosts.push(action.payload);
       state.performedOperation = statusOperation.addPostOK;
       state.comments = [];
     },
@@ -45,6 +48,7 @@ const postsSlice = createSlice({
     [getPosts.pending]: handlePending,
     [getPosts.rejected]: handleRejected,
     [getPosts.fulfilled](state, action) {
+      state.isRefresing = false;
       state.userPosts = action.payload;
       state.comments = [];
     },
@@ -57,20 +61,23 @@ const postsSlice = createSlice({
         post => post.documentId === action.payload.documentId
       );
       state.userPosts.splice(index, 1, action.payload);
+      state.isRefresing = false;
     },
 
     // *  addComments
     [addComments.pending]: handlePending,
     [addComments.rejected]: handleRejected,
     [addComments.fulfilled](state, action) {
-      state.comments.push(action.payload.comment);
-
       const index = state.userPosts.findIndex(
         post => post.documentId === action.payload.post.documentId
       );
+
       state.userPosts.splice(index, 1, action.payload.post);
 
       state.performedOperation = statusOperation.addCommentOK;
+
+      state.comments.push(action.payload.comment);
+      state.isRefresing = false;
     },
 
     // * getComments(postId)
@@ -78,6 +85,7 @@ const postsSlice = createSlice({
     [getComments.rejected]: handleRejected,
     [getComments.fulfilled](state, action) {
       state.comments = action.payload;
+      state.isRefresing = false;
     },
   },
 });
